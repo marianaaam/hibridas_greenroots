@@ -1,0 +1,243 @@
+// Estilos para el header interno usando tus variables personalizadas
+.header-interno {
+  // Toolbar personalizado con tus colores
+  .toolbar-custom {
+    --background: var(--primary-color);           // ← Fondo con tu color primario (#DF038F)
+    --color: var(--white-color);                  // ← Texto blanco
+    --border-color: transparent;                  // ← Sin borde
+    height: 70px;                                 // ← Altura del header
+    padding: 0 20px;                              // ← Espaciado horizontal
+  }
+
+  // Sección izquierda del header
+  .seccion-izquierda {
+    display: flex;                                // ← Layout flexbox
+    align-items: center;                          // ← Centrar verticalmente
+    gap: 15px;                                    // ← Espacio entre elementos
+    
+    // Botón hamburguesa - Solo visible en móvil
+    .boton-hamburguesa {
+      --color: var(--white-color);                // ← Color del icono
+      display: none;                              // ← Oculto por defecto (escritorio)
+      
+      ion-icon {
+        font-size: 24px;                          // ← Tamaño del icono
+      }
+    }
+    
+    // Contenedor principal de logo e info
+    .logo-info-container {
+      display: flex;                              // ← Layout flexbox
+      align-items: center;                        // ← Centrar verticalmente
+      gap: 15px;                                  // ← Espacio entre logo e info
+      
+      // Logo en el header (similar al que tienes en login)
+      .app-icon-header {
+        width: 45px;                              // ← Ancho del contenedor del logo
+        height: 45px;                             // ← Alto del contenedor del logo
+        background: linear-gradient(135deg, var(--white-color), #f8f9fa); // ← Fondo degradado
+        border-radius: 12px;                      // ← Bordes redondeados
+        display: flex;                            // ← Layout flexbox
+        align-items: center;                      // ← Centrar verticalmente
+        justify-content: center;                  // ← Centrar horizontalmente
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); // ← Sombra suave
+        
+        .logo-imagen {
+          width: 28px;                            // ← Ancho de la imagen del logo
+          height: 28px;                           // ← Alto de la imagen del logo
+          object-fit: contain;                    // ← Mantener proporción
+        }
+      }
+      
+      // Contenedor de información (nombre app + ubicación)
+      .info-container {
+        display: flex;                            // ← Layout flexbox
+        flex-direction: column;                   // ← Elementos en columna
+        justify-content: center;                  // ← Centrar verticalmente
+        gap: 2px;                                 // ← Espacio pequeño entre elementos
+        
+        // Nombre de la aplicación
+        .nombre-app {
+          color: var(--white-color);              // ← Color blanco
+          font-size: 18px;                        // ← Tamaño de fuente
+          font-weight: bold;                      // ← Texto en negrita
+          line-height: 1.2;                      // ← Altura de línea
+        }
+        
+        // Ubicación con icono
+        .ubicacion {
+          display: flex;                          // ← Layout flexbox
+          align-items: center;                    // ← Centrar verticalmente
+          gap: 4px;                               // ← Espacio entre icono y texto
+          color: rgba(255, 255, 255, 0.9);       // ← Color blanco semi-transparente
+          font-size: 13px;                       // ← Tamaño de fuente pequeño
+          
+          .icono-ubicacion {
+            font-size: 14px;                     // ← Tamaño del icono
+          }
+        }
+      }
+    }
+  }
+
+  // Sección derecha del header
+  .seccion-derecha {
+    display: flex;                                // ← Layout flexbox
+    align-items: center;                          // ← Centrar verticalmente
+    
+    // Botón de perfil
+    .boton-perfil {
+      --color: var(--white-color);                // ← Color del texto
+      display: flex;                              // ← Layout flexbox
+      align-items: center;                        // ← Centrar verticalmente
+      gap: 12px;                                  // ← Espacio entre avatar e info
+      padding: 8px 12px;                          // ← Espaciado interno
+      border-radius: 25px;                        // ← Bordes redondeados
+      
+      // Efecto hover
+      &:hover {
+        --background: rgba(255, 255, 255, 0.1);  // ← Fondo semi-transparente al pasar mouse
+      }
+      
+      // Avatar del usuario
+      .avatar-usuario {
+        width: 40px;                              // ← Ancho del avatar
+        height: 40px;                             // ← Alto del avatar
+        background: var(--white-color);           // ← Fondo blanco
+        border-radius: 50%;                       // ← Forma circular
+        display: flex;                            // ← Layout flexbox
+        align-items: center;                      // ← Centrar verticalmente
+        justify-content: center;                  // ← Centrar horizontalmente
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); // ← Sombra suave
+        
+        .iniciales {
+          color: var(--primary-color);           // ← Color de las iniciales (tu rosa)
+          font-size: 16px;                       // ← Tamaño de fuente
+          font-weight: bold;                     // ← Texto en negrita
+        }
+      }
+      
+      // Información del usuario (solo visible en escritorio)
+      .info-usuario {
+        display: flex;                            // ← Layout flexbox
+        align-items: center;                      // ← Centrar verticalmente
+        gap: 6px;                                 // ← Espacio entre nombre e icono
+        
+        .nombre-usuario {
+          color: var(--white-color);              // ← Color blanco
+          font-size: 14px;                        // ← Tamaño de fuente
+          font-weight: 500;                       // ← Texto semi-negrita
+          white-space: nowrap;                    // ← No romper línea
+        }
+        
+        .icono-dropdown {
+          font-size: 16px;                       // ← Tamaño del icono
+          color: rgba(255, 255, 255, 0.8);       // ← Color semi-transparente
+        }
+      }
+    }
+  }
+}
+
+// ============================================
+// RESPONSIVE DESIGN - MEDIA QUERIES
+// ============================================
+
+// Pantallas PEQUEÑAS (móviles) - 768px y menos
+@media (max-width: 768px) {
+  .header-interno {
+    .toolbar-custom {
+      height: 60px;                               // ← Header más pequeño en móvil
+      padding: 0 15px;                            // ← Menos padding
+    }
+    
+    .seccion-izquierda {
+      gap: 10px;                                  // ← Menos espacio entre elementos
+      
+      // MOSTRAR botón hamburguesa en móvil
+      .boton-hamburguesa {
+        display: block;                           // ← Hacer visible el botón hamburguesa
+      }
+      
+      .logo-info-container {
+        gap: 10px;                                // ← Menos espacio
+        
+        .app-icon-header {
+          width: 40px;                            // ← Logo más pequeño
+          height: 40px;
+          
+          .logo-imagen {
+            width: 24px;                          // ← Imagen más pequeña
+            height: 24px;
+          }
+        }
+        
+        .info-container {
+          .nombre-app {
+            font-size: 16px;                     // ← Texto más pequeño
+          }
+          
+          .ubicacion {
+            font-size: 12px;                     // ← Texto más pequeño
+          }
+        }
+      }
+    }
+    
+    .seccion-derecha {
+      .boton-perfil {
+        padding: 6px 8px;                        // ← Menos padding
+        gap: 8px;                               // ← Menos espacio
+        
+        .avatar-usuario {
+          width: 35px;                          // ← Avatar más pequeño
+          height: 35px;
+          
+          .iniciales {
+            font-size: 14px;                   // ← Iniciales más pequeñas
+          }
+        }
+        
+        // OCULTAR información del usuario en móvil
+        .info-usuario {
+          display: none;                        // ← Ocultar nombre y dropdown en móvil
+        }
+      }
+    }
+  }
+}
+
+// Pantallas GRANDES (escritorio) - 769px en adelante
+@media (min-width: 769px) {
+  .header-interno {
+    .seccion-izquierda {
+      // OCULTAR botón hamburguesa en escritorio
+      .boton-hamburguesa {
+        display: none;                            // ← Mantener oculto en escritorio
+      }
+    }
+    
+    .seccion-derecha {
+      .boton-perfil {
+        // MOSTRAR información del usuario en escritorio
+        .info-usuario {
+          display: flex;                          // ← Mostrar nombre y dropdown
+        }
+      }
+    }
+  }
+}
+
+// Animaciones suaves para interacciones
+.boton-hamburguesa,
+.boton-perfil {
+  transition: all 0.3s ease;                     // ← Transición suave de 0.3 segundos
+}
+
+.avatar-usuario {
+  transition: transform 0.2s ease;               // ← Transición para el avatar
+  
+  &:hover {
+    transform: scale(1.05);                     // ← Efecto de crecimiento al pasar mouse
+  }
+}

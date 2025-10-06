@@ -1,0 +1,70 @@
+ion-content {
+  --background: url('/assets/fondo.jpg') no-repeat center center / cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-content::part(scroll) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-item {
+  --background: #f7f7f7 !important;
+  --color: #333 !important; /* texto */
+  --placeholder-color: #777 !important; /* hint */
+  --highlight-color-focused: #11ac54 !important; /* línea activa */
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.register-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 35px 25px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  width: 100px;
+  margin: 0 auto 15px;
+}
+
+.register-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #2e7d32;
+}
+
+.input-field {
+  margin-bottom: 15px;
+  border-radius: 12px;
+  --background: #f7f7f7;
+  --padding-start: 12px;
+}
+
+.btn-register {
+  --background: #11ac54;
+  --color: #fff;
+  border-radius: 12px;
+  height: 48px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.back-text {
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.back-text a {
+  color: #ff7043;
+  font-weight: bold;
+  text-decoration: none;
+}

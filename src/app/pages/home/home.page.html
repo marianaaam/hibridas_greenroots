@@ -1,0 +1,30 @@
+<app-header-interno
+  [nombreApp]="'Green Roots'"
+  [ubicacion]="'Colombia'"
+  [mostrarPerfil]="false">
+</app-header-interno>
+
+<ion-content>
+  <!-- Header con degradado -->
+  <div class="header">
+    <h1 class="titulo-bienvenida">BIENVENIDOS A <span>GREEN ROOTS</span></h1>
+    <h4>Explora productos sostenibles diseñados para mejorar tu día a día 🌱</h4>
+  </div>
+
+  <!-- Contenedor blanco solo con texto -->
+  <div class="card-info">
+    <p>
+      En un mundo donde el consumo responsable es más importante que nunca, 
+      nuestra tienda ofrece productos ecológicos que promueven la sostenibilidad 
+      y el respeto por el medio ambiente. 
+      Conectamos consumidores conscientes con productores comprometidos, 
+      facilitando un estilo de vida más verde y equilibrado.
+    </p>
+  </div>
+
+  <!-- Botones fuera del contenedor -->
+  <div class="buttons">
+    <ion-button expand="block" class="btn-login" routerLink="/login">INICIAR SESIÓN</ion-button>
+    <ion-button expand="block" fill="outline" class="btn-register" routerLink="/register">REGISTRARSE</ion-button>
+  </div>
+</ion-content>
