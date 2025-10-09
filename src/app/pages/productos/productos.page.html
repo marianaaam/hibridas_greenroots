@@ -11,6 +11,15 @@
   </ion-header>
 
   <div class="content-container">
+    <!-- Filtros de Categoría -->
+    <div class="filtros-categorias">
+      <ion-button size="small" fill="outline" [color]="categoriaSeleccionada === 'todos' ? 'success' : 'medium'" (click)="filtrarProductos('todos')">
+        Todos
+      </ion-button>
+      <ion-button *ngFor="let cat of categorias" size="small" fill="outline" [color]="categoriaSeleccionada === cat ? 'success' : 'medium'" (click)="filtrarProductos(cat)">
+        {{ cat | titlecase }}
+      </ion-button>
+    </div>
     <!-- Loading State -->
     <div *ngIf="isLoading" class="loading-state">
       <ion-spinner name="crescent"></ion-spinner>
@@ -19,7 +28,7 @@
 
     <!-- Grid de Productos -->
     <div *ngIf="!isLoading" class="productos-grid">
-      <ion-card *ngFor="let producto of productos" class="producto-card" [class.destacado]="producto.destacado">
+      <ion-card *ngFor="let producto of productosFiltrados" class="producto-card" [class.destacado]="producto.destacado">
         <div class="producto-imagen-container">
           <img [src]="producto.imagen" [alt]="producto.nombre" class="producto-imagen" />
           <ion-badge *ngIf="producto.destacado" color="success" class="badge-destacado">Destacado</ion-badge>

@@ -13,6 +13,12 @@ import { AuthService } from 'src/app/services/auth'; // ✅ Cambia esta importac
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class LoginPage {
+  goToRecover() {
+    this.router.navigate(['/recover']);
+  }
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
   email = '';
   password = '';
   isLoading = false;

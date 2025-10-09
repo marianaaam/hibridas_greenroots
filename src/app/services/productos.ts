@@ -49,8 +49,8 @@ export class ProductosService {
         id: 1,
         nombre: 'Botella Reutilizable de Bambú',
         descripcion: 'Botella ecológica de bambú con interior de acero inoxidable. Ideal para mantener bebidas frías o calientes.',
-        precio: 85,
-        imagen: 'assets/productos/botella_bambu.jpg',
+        precio: 42000,
+        imagen: 'assets/productos/botella_bambu.png',
         categoria: 'accesorios',
         stock: 20,
         destacado: true
@@ -59,8 +59,8 @@ export class ProductosService {
         id: 2,
         nombre: 'Cepillo Dental de Bambú',
         descripcion: 'Cepillo biodegradable con mango de bambú y cerdas suaves ecológicas.',
-        precio: 25,
-        imagen: 'assets/fonodo.jpg',
+        precio: 6500,
+        imagen: 'assets/productos/cepillo_bambu.jpeg',
         categoria: 'higiene',
         stock: 50,
         destacado: true
@@ -69,8 +69,8 @@ export class ProductosService {
         id: 3,
         nombre: 'Bolsa Reutilizable de Algodón',
         descripcion: 'Bolsa 100% algodón orgánico para tus compras diarias. Resistente y lavable.',
-        precio: 40,
-        imagen: 'assets/productos/bolsa_algodon.jpg',
+        precio: 18000,
+        imagen: 'assets/productos/bolsa.png',
         categoria: 'hogar',
         stock: 35
       },
@@ -78,8 +78,8 @@ export class ProductosService {
         id: 4,
         nombre: 'Jabón Artesanal Natural',
         descripcion: 'Jabón hecho a mano con ingredientes naturales y aceites esenciales. Sin parabenos.',
-        precio: 18,
-        imagen: 'assets/productos/jabon_artesanal.jpg',
+        precio: 9000,
+        imagen: 'assets/productos/jabon.jpg',
         categoria: 'cuidado personal',
         stock: 45
       },
@@ -87,8 +87,8 @@ export class ProductosService {
         id: 5,
         nombre: 'Set de Cubiertos de Bambú',
         descripcion: 'Set portátil de cubiertos ecológicos, incluye cuchillo, tenedor, cuchara y estuche de tela.',
-        precio: 30,
-        imagen: 'assets/productos/cubiertos_bambu.jpg',
+        precio: 25000,
+        imagen: 'assets/productos/set_cubiertos.png',
         categoria: 'accesorios',
         stock: 25
       }

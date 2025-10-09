@@ -54,7 +54,6 @@ export class MenuComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('userData');
     window.location.href = '/login';
   }
 }

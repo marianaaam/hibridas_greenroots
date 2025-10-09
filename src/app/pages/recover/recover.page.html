@@ -1,0 +1,24 @@
+<ion-content>
+  <div class="recover-container">
+    <img src="/assets/logo.png" alt="Green Roots Logo" class="logo" />
+    <h2 class="recover-title">Recuperar Contraseña</h2>
+    <form (ngSubmit)="onSubmit()">
+      <ion-item class="input-field">
+        <ion-input
+          type="email"
+          placeholder="Correo electrónico"
+          [(ngModel)]="email"
+          name="email"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-button expand="block" class="btn-recover" type="submit">
+        Recuperar
+      </ion-button>
+    </form>
+    <p class="recover-message" *ngIf="message" [ngClass]="{ 'error': !success, 'success': success }">{{ message }}</p>
+    <p class="back-login">
+      <a (click)="goToLogin()">Volver</a>
+    </p>
+  </div>
+</ion-content>

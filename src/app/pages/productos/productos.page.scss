@@ -1,3 +1,12 @@
+/* Filtros de Categoría */
+.filtros-categorias {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 /* src/app/pages/productos/productos.page.scss */
 .productos-content {
   --background: #f8f9fa;
@@ -53,9 +62,11 @@
   }
 }
 
+
 .producto-imagen-container {
   position: relative;
-  height: 200px;
+  height: 140px;
+  max-height: 140px;
   overflow: hidden;
   border-radius: 8px 8px 0 0;
 }
@@ -63,7 +74,11 @@
 .producto-imagen {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-height: 140px;
+  object-fit: contain;
+  background: #fff;
+  display: block;
+  margin: 0 auto;
 }
 
 .badge-destacado {

@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem(this.USER_KEY);
+    // No borra el usuario, solo podrías marcar un flag de sesión si lo necesitas
   }
 
   isLoggedIn(): boolean {
