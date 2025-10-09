@@ -97,7 +97,7 @@ export class RegisterPage {
     };
 
     try {
-      const registroExitoso = await this.authService.registrar(userData);
+  const registroExitoso = await this.authService.register(userData.email, userData.password);
       
       if (registroExitoso) {
         this.showToast('Registro exitoso', 'success');

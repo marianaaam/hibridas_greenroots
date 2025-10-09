@@ -1,5 +1,4 @@
-// src/app/components/menu/menu.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonMenu,
@@ -22,11 +21,10 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    IonMenu,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonContent,
     IonList,
     IonItem,
     IonLabel,
@@ -35,18 +33,28 @@ import {
     IonIcon
   ],
 })
-export class MenuComponent {
-  usuario: any = null;
+export class MenuComponent implements OnInit {
+  usuario: any = null; // Inicializamos con null
 
-  constructor() {
-    const datos = localStorage.getItem('usuario');
-    if (datos) {
-      this.usuario = JSON.parse(datos);
+  ngOnInit() {
+    let usuarioSeguro = { nombre: 'Usuario', email: '' };
+    try {
+      const datos = localStorage.getItem('userData');
+      if (datos) {
+        const parsed = JSON.parse(datos);
+        usuarioSeguro = {
+          nombre: parsed.nombre || (parsed.email ? parsed.email.split('@')[0] : 'Usuario'),
+          email: parsed.email || ''
+        };
+      }
+    } catch (e) {
+      // Si hay error en el parseo, usamos el usuario por defecto
     }
+    this.usuario = usuarioSeguro;
   }
 
   logout() {
-    localStorage.removeItem('usuario');
+    localStorage.removeItem('userData');
     window.location.href = '/login';
   }
 }

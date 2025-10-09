@@ -5,6 +5,35 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 
+// 👇 Importa Ionicons y los íconos que usas
+import { addIcons } from 'ionicons';
+import {
+  homeOutline,
+  personOutline,
+  personCircleOutline,
+  settingsOutline,
+  logOutOutline,
+  receiptOutline,
+  cartOutline,
+  cubeOutline,
+  heartOutline,
+  listOutline
+} from 'ionicons/icons';
+
+// 👇 Registra los íconos globalmente para evitar los errores en consola
+addIcons({
+  homeOutline,
+  personOutline,
+  personCircleOutline,
+  settingsOutline,
+  logOutOutline,
+  receiptOutline,
+  cartOutline,
+  cubeOutline,
+  heartOutline,
+  listOutline
+});
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

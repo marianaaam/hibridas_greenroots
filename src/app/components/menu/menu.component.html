@@ -1,5 +1,4 @@
 <ion-menu side="start" menuId="main-menu" contentId="main-content">
-  <!-- Toolbar con degradado -->
   <ion-header>
     <ion-toolbar class="menu-toolbar">
       <div class="menu-header">
@@ -9,20 +8,18 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- Contenido del menú -->
   <ion-content class="menu-content">
-    <!-- Info del usuario -->
-    <div class="user-info">
+    <!-- Mostramos la info solo si hay usuario -->
+    <div class="user-info" *ngIf="usuario">
       <div class="user-avatar">
         <ion-icon name="person-circle-outline"></ion-icon>
       </div>
       <div class="user-details">
-        <h3>{{ usuario.nombre }}</h3>
-        <p>{{ usuario.email }}</p>
+        <h3>{{ usuario.nombre || 'Usuario' }}</h3>
+        <p>{{ usuario.email || '' }}</p>
       </div>
     </div>
 
-    <!-- Lista de navegación -->
     <ion-list class="menu-list">
       <ion-item routerLink="/home">
         <ion-icon name="home-outline" slot="start"></ion-icon>
@@ -60,7 +57,6 @@
       </ion-item>
     </ion-list>
 
-    <!-- Botón de logout abajo -->
     <div class="logout-section">
       <ion-button expand="block" class="btn-logout" (click)="logout()">
         <ion-icon name="log-out-outline" slot="start"></ion-icon>
@@ -70,5 +66,4 @@
   </ion-content>
 </ion-menu>
 
-<!-- Contenido principal -->
 <ion-router-outlet id="main-content"></ion-router-outlet>

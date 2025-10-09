@@ -1,36 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { StorageService } from './storage';
-
-export interface Usuario {
-  nombre: string;
-  email: string;
-  password: string;
-  telefono?: string;
-}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private usuarioActual: Usuario | null = null;
+  private readonly USER_KEY = 'userData';
 
-  constructor(
-    private storageService: StorageService,
-    private router: Router
-  ) { }
-
-  async registrar(usuario: Usuario): Promise<boolean> {
+  async register(email: string, password: string): Promise<boolean> {
     try {
-      const usuarios = await this.storageService.get('usuarios') || [];
-      
-      const existe = usuarios.find((u: Usuario) => u.email === usuario.email);
-      if (existe) {
-        return false;
-      }
-
-      usuarios.push(usuario);
-      await this.storageService.set('usuarios', usuarios);
+      // Si el email tiene parte antes de @, úsala como nombre
+      const nombre = email.split('@')[0] || 'Usuario';
+      const userData = { email, password, nombre };
+      localStorage.setItem(this.USER_KEY, JSON.stringify(userData));
       return true;
     } catch (error) {
       console.error('Error al registrar:', error);
@@ -39,39 +20,26 @@ export class AuthService {
   }
 
   async login(email: string, password: string): Promise<boolean> {
-    try {
-      const usuarios = await this.storageService.get('usuarios') || [];
-      const usuario = usuarios.find((u: Usuario) => 
-        u.email === email && u.password === password
-      );
+    const savedUser = localStorage.getItem(this.USER_KEY);
+    if (!savedUser) return false;
 
-      if (usuario) {
-        this.usuarioActual = usuario;
-        await this.storageService.set('usuarioActual', usuario);
-        return true;
+    const userData = JSON.parse(savedUser);
+    const isValid = userData.email === email && userData.password === password;
+    if (isValid) {
+      // Si no tiene nombre, lo agregamos y actualizamos el storage
+      if (!userData.nombre) {
+        userData.nombre = email.split('@')[0] || 'Usuario';
+        localStorage.setItem(this.USER_KEY, JSON.stringify(userData));
       }
-      return false;
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      return false;
     }
+    return isValid;
   }
 
-  async logout() {
-    this.usuarioActual = null;
-    await this.storageService.remove('usuarioActual');
-    this.router.navigate(['/bienvenida']);
+  logout() {
+    localStorage.removeItem(this.USER_KEY);
   }
 
-  async estaAutenticado(): Promise<boolean> {
-    const usuario = await this.storageService.get('usuarioActual');
-    return usuario !== null;
-  }
-
-  async obtenerUsuarioActual(): Promise<Usuario | null> {
-    if (!this.usuarioActual) {
-      this.usuarioActual = await this.storageService.get('usuarioActual');
-    }
-    return this.usuarioActual;
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem(this.USER_KEY);
   }
 }

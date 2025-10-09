@@ -11,7 +11,7 @@ import { ProductosService, Producto } from '../../services/productos';
   templateUrl: './productos.page.html',
   styleUrls: ['./productos.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, MenuComponent, HeaderInternoComponent]
+  imports: [CommonModule, IonicModule, MenuComponent]
 })
 export class ProductosPage implements OnInit {
   productos: Producto[] = [];
