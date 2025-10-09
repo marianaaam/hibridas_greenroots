@@ -3,7 +3,7 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth'; // ✅ Cambia esta importación
+import { AuthService } from 'src/app/services/auth';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ export class LoginPage {
   isLoading = false;
 
   constructor(
-    private authService: AuthService, // ✅ Ahora usa el servicio correcto
+    private authService: AuthService,
     private toastCtrl: ToastController,
     private router: Router
   ) {}

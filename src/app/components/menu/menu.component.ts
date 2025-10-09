@@ -34,7 +34,7 @@ import {
   ],
 })
 export class MenuComponent implements OnInit {
-  usuario: any = null; // Inicializamos con null
+  usuario: any = null;
 
   ngOnInit() {
     let usuarioSeguro = { nombre: 'Usuario', email: '' };
@@ -48,7 +48,6 @@ export class MenuComponent implements OnInit {
         };
       }
     } catch (e) {
-      // Si hay error en el parseo, usamos el usuario por defecto
     }
     this.usuario = usuarioSeguro;
   }

@@ -20,7 +20,6 @@
         {{ cat | titlecase }}
       </ion-button>
     </div>
-    <!-- Loading State -->
     <div *ngIf="isLoading" class="loading-state">
       <ion-spinner name="crescent"></ion-spinner>
       <p>Cargando productos...</p>
@@ -59,8 +58,6 @@
         </ion-card-content>
       </ion-card>
     </div>
-
-    <!-- Empty State -->
     <div *ngIf="!isLoading && productos.length === 0" class="empty-state">
       <ion-icon name="leaf-outline" class="empty-icon"></ion-icon>
       <h3>No hay productos disponibles</h3>

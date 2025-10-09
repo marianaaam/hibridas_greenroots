@@ -28,10 +28,10 @@ ion-content::part(scroll) {
 }
 
 ion-input {
-  color: #000 !important; /* texto escrito */
-  --color: #000 !important; /* asegura que nunca se vuelva blanco */
-  --placeholder-color: #777 !important; /* color del hint */
-  --placeholder-opacity: 1 !important; /* siempre visible */
+  color: #000 !important;
+  --color: #000 !important; 
+  --placeholder-color: #777 !important;
+  --placeholder-opacity: 1 !important;
 }
 
 .login-container {
