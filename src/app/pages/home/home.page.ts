@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HeaderInternoComponent } from 'src/app/components/header-interno/header-interno.component';
 
 
 @Component({
@@ -14,7 +13,7 @@ import { HeaderInternoComponent } from 'src/app/components/header-interno/header
     IonicModule,      
     CommonModule,
     RouterModule,
-    HeaderInternoComponent
+    
   ]
 })
 export class HomePage {}

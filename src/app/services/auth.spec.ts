@@ -1,16 +1,36 @@
-import { TestBed } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { Auth } from './auth';
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
 
-describe('Auth', () => {
-  let service: Auth;
+  constructor(private router: Router) {}
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Auth);
-  });
+  // Guardar usuario en localStorage
+  registerUser(user: any) {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+  // Obtener usuario guardado
+  getUser() {
+    const data = localStorage.getItem('user');
+    return data ? JSON.parse(data) : null;
+  }
+
+  // Verificar credenciales al iniciar sesión
+  login(email: string, password: string): boolean {
+    const user = this.getUser();
+    if (user && user.email === email && user.password === password) {
+      return true;
+    }
+    return false;
+  }
+
+  // Cerrar sesión
+  logout() {
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  }
+}

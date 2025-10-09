@@ -1,20 +1,36 @@
+// src/app/pages/productos/productos.page.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import { MenuComponent } from '../../components/menu/menu.component';
+import { HeaderInternoComponent } from '../../components/header-interno/header-interno.component';
+import { ProductosService, Producto } from '../../services/productos';
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.page.html',
   styleUrls: ['./productos.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [CommonModule, IonicModule, MenuComponent, HeaderInternoComponent]
 })
 export class ProductosPage implements OnInit {
+  productos: Producto[] = [];
+  isLoading = true;
 
-  constructor() { }
+  constructor(private productosService: ProductosService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.cargarProductos();
   }
 
+  async cargarProductos() {
+    try {
+      this.isLoading = true;
+      this.productos = await this.productosService.obtenerProductos();
+    } catch (error) {
+      console.error('Error al cargar productos:', error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
 }

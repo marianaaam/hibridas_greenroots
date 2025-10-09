@@ -1,13 +1,61 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>productos</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-menu></app-menu>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content [fullscreen]="true" class="productos-content">
+  <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title size="large">productos</ion-title>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Productos Ecológicos</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="content-container">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Cargando productos...</p>
+    </div>
+
+    <!-- Grid de Productos -->
+    <div *ngIf="!isLoading" class="productos-grid">
+      <ion-card *ngFor="let producto of productos" class="producto-card" [class.destacado]="producto.destacado">
+        <div class="producto-imagen-container">
+          <img [src]="producto.imagen" [alt]="producto.nombre" class="producto-imagen" />
+          <ion-badge *ngIf="producto.destacado" color="success" class="badge-destacado">Destacado</ion-badge>
+        </div>
+
+        <ion-card-header>
+          <ion-card-title class="producto-nombre">{{ producto.nombre }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p class="producto-descripcion">{{ producto.descripcion }}</p>
+          
+          <div class="producto-info">
+            <div class="producto-precio">
+              $ {{ producto.precio | number:'1.0-0' }}
+            </div>
+            <div class="producto-categoria">
+              {{ producto.categoria }}
+            </div>
+          </div>
+
+          <div class="producto-actions">
+            <ion-button expand="block" color="primary" size="small">
+              <ion-icon slot="start" name="cart-outline"></ion-icon>
+              Agregar
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && productos.length === 0" class="empty-state">
+      <ion-icon name="leaf-outline" class="empty-icon"></ion-icon>
+      <h3>No hay productos disponibles</h3>
+      <p>Pronto tendremos nuevos productos ecológicos para ti.</p>
+    </div>
+  </div>
 </ion-content>

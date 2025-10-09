@@ -1,16 +1,24 @@
-import { TestBed } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
 
-import { Storage } from './storage';
+@Injectable({
+  providedIn: 'root'
+})
+export class StorageService {
 
-describe('Storage', () => {
-  let service: Storage;
+  async set(key: string, value: any): Promise<void> {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Storage);
-  });
+  async get(key: string): Promise<any> {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+  }
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+  async remove(key: string): Promise<void> {
+    localStorage.removeItem(key);
+  }
+
+  async clear(): Promise<void> {
+    localStorage.clear();
+  }
+}
