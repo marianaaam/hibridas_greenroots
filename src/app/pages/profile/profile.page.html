@@ -1,13 +1,53 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content class="profile-content">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="profile-container">
+    <!-- Imagen de perfil -->
+    <div class="profile-photo-container">
+      <img src="assets/profile-default.png" alt="Foto de perfil" class="profile-photo" />
+      <ion-icon name="camera" class="camera-icon"></ion-icon>
+    </div>
+
+    <!-- Campos del perfil -->
+    <ion-list>
+      <ion-item>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-input value="Mariana" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input value="Marin Rojas" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="call" slot="start"></ion-icon>
+        <ion-input value="3123456678" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="mail" slot="start"></ion-icon>
+        <ion-input value="mariana123@gmail.com" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="id-card" slot="start"></ion-icon>
+        <ion-input value="CC - cédula de ciudadanía" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="card" slot="start"></ion-icon>
+        <ion-input value="10xx232xx3" readonly></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" class="edit-button">Editar</ion-button>
+  </div>
 </ion-content>

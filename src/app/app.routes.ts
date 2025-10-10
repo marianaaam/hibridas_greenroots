@@ -1,10 +1,13 @@
-// ...existing code...
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage),
+    loadComponent: () => import('./pages/splash/splash.page').then(m => m.SplashPage),
+  },
+  {
+  path: 'home',
+  loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage),
   },
   {
     path: 'login',
@@ -20,11 +23,20 @@ export const routes: Routes = [
   },
   {
     path: 'productos',
-    loadComponent: () => import('./pages/productos/productos.page').then(m => m.ProductosPage)
+    loadComponent: () => import('./pages/productos/productos.page').then(m => m.ProductosPage),
   },
+  {
+    path: 'profile',
+    loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage),
+  },
+  
   {
     path: '**',
     redirectTo: '',
     pathMatch: 'full',
+  },
+  {
+    path: 'inicio',
+    loadComponent: () => import('./pages/inicio/inicio.page').then( m => m.InicioPage)
   },
 ];

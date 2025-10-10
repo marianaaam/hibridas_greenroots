@@ -1,0 +1,54 @@
+.profile-content {
+  --background: #f2f2f2;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+}
+
+.profile-photo-container {
+  position: relative;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #008f39;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.camera-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: 24px;
+  color: white;
+  background-color: #008f39;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+ion-item {
+  border: 1px solid #008f39;
+  border-radius: 6px;
+  margin: 6px 0;
+  --background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-button {
+  margin-top: 20px;
+  background-color: #008f39;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 8px 0;
+  box-shadow: 0 4px 6px rgba(0, 143, 57, 0.3);
+}
