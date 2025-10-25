@@ -99,6 +99,7 @@ export class ProductosService {
     await this.storageService.set(this.STORAGE_KEY, this.productos);
   }
 
+  // MÉTODOS EXISTENTES
   async obtenerProductos(): Promise<Producto[]> {
     await this.inicializarProductos();
     return [...this.productos];
@@ -118,5 +119,106 @@ export class ProductosService {
     await this.inicializarProductos();
     const categorias = this.productos.map(p => p.categoria);
     return [...new Set(categorias)];
+  }
+
+  // MÉTODOS NUEVOS - COMO LOS DE LA PROFESORA
+
+  // Reducir Stock por compra
+  async reducirStock(id: number, cantidad: number): Promise<boolean> {
+    try {
+      await this.inicializarProductos();
+      const producto = this.productos.find(p => p.id === id);
+
+      if (producto && producto.stock >= cantidad) {
+        producto.stock -= cantidad;
+        await this.guardarProductos();
+        console.log(`Stock reducido: ${producto.nombre} - Nuevo stock: ${producto.stock}`);
+        return true;
+      } else {
+        console.warn(`No hay suficiente stock para ${producto?.nombre}`);
+        return false;
+      }
+    } catch (error) {
+      console.error('Error al reducir stock:', error);
+      return false;
+    }
+  }
+
+  // Buscar Productos
+  async buscarProductos(termino: string): Promise<Producto[]> {
+    try {
+      await this.inicializarProductos();
+      
+      const terminoLower = termino.toLowerCase();
+      return this.productos.filter(p =>
+        p.nombre.toLowerCase().includes(terminoLower) ||
+        p.descripcion.toLowerCase().includes(terminoLower) ||
+        p.categoria.toLowerCase().includes(terminoLower)
+      );
+    } catch (error) {
+      console.error('Error al buscar productos:', error);
+      return [];
+    }
+  }
+
+  // Eliminar Producto
+  async eliminarProducto(id: number): Promise<boolean> {
+    try {
+      await this.inicializarProductos();
+      const index = this.productos.findIndex(p => p.id === id);
+      
+      if (index !== -1) {
+        const productoEliminado = this.productos.splice(index, 1)[0];
+        await this.guardarProductos();
+        console.log(`Producto eliminado: ${productoEliminado.nombre}`);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error al eliminar producto:', error);
+      return false;
+    }
+  }
+
+  // Actualizar Producto
+  async actualizarProducto(id: number, datosActualizacion: Partial<Producto>): Promise<boolean> {
+    try {
+      await this.inicializarProductos();
+      const index = this.productos.findIndex(p => p.id === id);
+      
+      if (index !== -1) {
+        this.productos[index] = { ...this.productos[index], ...datosActualizacion };
+        await this.guardarProductos();
+        console.log(`Producto actualizado: ${this.productos[index].nombre}`);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error al actualizar producto:', error);
+      return false;
+    }
+  }
+
+  // Agregar nuevo producto
+  async agregarProducto(producto: Omit<Producto, 'id'>): Promise<boolean> {
+    try {
+      await this.inicializarProductos();
+      
+      // Generar nuevo ID
+      const nuevoId = Math.max(...this.productos.map(p => p.id), 0) + 1;
+      
+      const nuevoProducto: Producto = {
+        ...producto,
+        id: nuevoId
+      };
+      
+      this.productos.push(nuevoProducto);
+      await this.guardarProductos();
+      console.log(`Nuevo producto agregado: ${nuevoProducto.nombre}`);
+      return true;
+    } catch (error) {
+      console.error('Error al agregar producto:', error);
+      return false;
+    }
   }
 }
