@@ -1,95 +1,103 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule, MenuController } from '@ionic/angular';
+import { CarritoService } from '../../services/carrito';
 
 @Component({
-  selector: 'app-header-interno',                // ← Selector para usar en HTML
+  selector: 'app-header-interno',
   templateUrl: './header-interno.component.html',
   styleUrls: ['./header-interno.component.scss'],
-  standalone: true,                              // ← Componente standalone
-  imports: [CommonModule, IonicModule]           // ← Importaciones necesarias
+  standalone: true,
+  imports: [CommonModule, IonicModule]
 })
-export class HeaderInternoComponent {
+export class HeaderInternoComponent implements OnInit {
   
-  // Propiedades configurables desde el componente padre
-  @Input() nombreApp: string = 'NombreDeLaApp';           // ← Nombre de la aplicación
-  @Input() ubicacion: string = 'Bogotá, Colombia';        // ← Ubicación actual
-  @Input() mostrarPerfil: boolean = true;                 // ← Mostrar botón de perfil
+  @Input() nombreApp: string = 'GreenRoots';
+  @Input() ubicacion: string = 'Bogotá, Colombia';
+  @Input() mostrarPerfil: boolean = true;
+  @Input() mostrarCarrito: boolean = true;
   
-  // Datos del usuario logueado (se obtienen del localStorage)
   usuarioActual: any = null;
+  cantidadCarrito: number = 0;
 
   constructor(
-    private menuController: MenuController,      // ← Para controlar el menú lateral
-    private router: Router                       // ← Para navegación entre páginas
+    private menuController: MenuController,
+    private router: Router,
+    private carritoService: CarritoService
   ) {
-    // Al inicializar el componente, obtenemos los datos del usuario logueado
     this.cargarUsuarioActual();
   }
 
-  /**
-   * Carga los datos del usuario actual desde localStorage
-   * Este método se ejecuta al inicializar el componente
-   */
+  async ngOnInit() {
+    await this.actualizarCantidadCarrito();
+  }
+
   private cargarUsuarioActual(): void {
     try {
-      // Obtenemos el usuario guardado en localStorage durante el login
       const usuarioGuardado = localStorage.getItem('usuarioActual');
-      
       if (usuarioGuardado) {
-        // Si existe, lo parseamos de JSON a objeto
         this.usuarioActual = JSON.parse(usuarioGuardado);
-        console.log('Usuario cargado:', this.usuarioActual);
       } else {
-        console.log('No hay usuario logueado');
+        this.usuarioActual = {
+          nombres: 'Usuario',
+          apellidos: 'Demo'
+        };
       }
     } catch (error) {
-      console.error('Error al cargar usuario:', error);
+      this.usuarioActual = {
+        nombres: 'Usuario',
+        apellidos: 'Demo'
+      };
     }
   }
 
-  /**
-   * Abre el menú lateral en dispositivos móviles
-   * Se ejecuta cuando el usuario hace clic en el botón hamburguesa
-   */
+  async actualizarCantidadCarrito() {
+    try {
+      this.cantidadCarrito = await this.carritoService.obtenerCantidadTotal();
+    } catch (error) {
+      this.cantidadCarrito = 0;
+    }
+  }
+
   abrirMenu(): void {
-    console.log('Abriendo menú lateral...');
-    this.menuController.open('menu-principal');  // ← 'menu-principal' es el ID del menú
+    this.menuController.open('menu-principal');
   }
 
-  /**
-   * Navega a la página de perfil del usuario
-   * Se ejecuta cuando el usuario hace clic en el botón de perfil
-   */
   irAPerfil(): void {
-    console.log('Navegando al perfil...');
-    this.router.navigate(['/perfil']);           // ← Ruta de la página de perfil
+    this.router.navigate(['/profile']);
   }
 
-  /**
-   * Obtiene el nombre completo del usuario para mostrar en el header
-   * Combina nombres y apellidos del usuario logueado
-   */
+  irAlCarrito(): void {
+    this.router.navigate(['/carrito']);
+  }
+
   getNombreCompleto(): string {
-    if (this.usuarioActual) {
-      // Si el usuario está logueado, retornamos nombres + apellidos
+  if (this.usuarioActual) {
+    // El usuario tiene "nombre" en lugar de "nombres" y "apellidos"
+    if (this.usuarioActual.nombre) {
+      return this.usuarioActual.nombre;
+    } else if (this.usuarioActual.nombres && this.usuarioActual.apellidos) {
       return `${this.usuarioActual.nombres} ${this.usuarioActual.apellidos}`;
     }
-    return 'Usuario';  // ← Valor por defecto si no hay usuario
   }
+  return 'Usuario GreenRoots';
+}
 
-  /**
-   * Obtiene las iniciales del usuario para mostrar en el avatar
-   * Toma la primera letra del nombre y apellido
-   */
   getIniciales(): string {
-    if (this.usuarioActual && this.usuarioActual.nombres && this.usuarioActual.apellidos) {
-      // Primera letra del nombre + primera letra del apellido
+    if (this.usuarioActual && this.usuarioActual.nombre) {
+      // Tomar las primeras dos letras del nombre completo
+      const nombre = this.usuarioActual.nombre;
+      if (nombre.length >= 2) {
+        return nombre.substring(0, 2).toUpperCase();
+      } else {
+        return nombre.charAt(0).toUpperCase();
+      }
+    } else if (this.usuarioActual && this.usuarioActual.nombres && this.usuarioActual.apellidos) {
       const inicialNombre = this.usuarioActual.nombres.charAt(0).toUpperCase();
       const inicialApellido = this.usuarioActual.apellidos.charAt(0).toUpperCase();
       return inicialNombre + inicialApellido;
     }
-    return 'U';  // ← Valor por defecto
+    return 'GR';
   }
 }

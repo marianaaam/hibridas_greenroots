@@ -1,37 +1,21 @@
 <ion-header class="header-interno">
   <ion-toolbar class="toolbar-custom">
     
-        <div slot="start" class="seccion-izquierda">
+    <div slot="start" class="seccion-izquierda">
       
-      
-      <ion-button 
-        fill="clear" 
-        class="boton-hamburguesa"
-        (click)="abrirMenu()">
+      <!-- Botón hamburguesa TEMPORAL -->
+      <ion-menu-button>
         <ion-icon name="menu" slot="icon-only"></ion-icon>
-      </ion-button>
-
-<!-- Botón hamburguesa TEMPORAL -->
-<ion-button 
-  fill="clear" 
-  (click)="abrirMenu()"
-  style="color: white;">
-  <ion-icon name="menu" slot="icon-only"></ion-icon>
-</ion-button>
+      </ion-menu-button>
       
-           <div class="logo-info-container">
+      <div class="logo-info-container">
         
-      
         <div class="app-icon-header">
-          <img src="assets/images/Logo.png" alt="Logo" class="logo-imagen">
+          <img src="assets/logo.png" alt="Logo" class="logo-imagen">
         </div>
         
-        
         <div class="info-container">
-          
           <div class="nombre-app">{{ nombreApp }}</div>
-          
-          
           <div class="ubicacion">
             <ion-icon name="location-outline" class="icono-ubicacion"></ion-icon>
             <span>{{ ubicacion }}</span>
@@ -41,8 +25,23 @@
       </div>
     </div>
 
-    
     <div slot="end" class="seccion-derecha">
+      
+      <!-- NUEVO: Botón del carrito -->
+      <ion-button 
+        *ngIf="mostrarCarrito"
+        fill="clear" 
+        class="boton-carrito"
+        (click)="irAlCarrito()">
+        
+        <div class="carrito-container">
+          <ion-icon name="cart-outline" class="icono-carrito"></ion-icon>
+          <ion-badge *ngIf="cantidadCarrito > 0" color="danger" class="carrito-badge">
+            {{ cantidadCarrito }}
+          </ion-badge>
+        </div>
+        
+      </ion-button>
       
       <!-- Botón de perfil con avatar -->
       <ion-button 
@@ -51,11 +50,11 @@
         class="boton-perfil"
         (click)="irAPerfil()">
         
-                <div class="avatar-usuario">
+        <div class="avatar-usuario">
           <span class="iniciales">{{ getIniciales() }}</span>
         </div>
         
-         <div class="info-usuario">
+        <div class="info-usuario">
           <span class="nombre-usuario">{{ getNombreCompleto() }}</span>
           <ion-icon name="chevron-down-outline" class="icono-dropdown"></ion-icon>
         </div>

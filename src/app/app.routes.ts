@@ -29,7 +29,10 @@ export const routes: Routes = [
     path: 'profile',
     loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage),
   },
-  
+  {
+    path: 'carrito',
+    loadComponent: () => import('./pages/carrito/carrito.page').then( m => m.CarritoPage)
+  },
   {
     path: '**',
     redirectTo: '',
@@ -39,8 +42,5 @@ export const routes: Routes = [
     path: 'inicio',
     loadComponent: () => import('./pages/inicio/inicio.page').then( m => m.InicioPage)
   },
-  {
-    path: 'carrito',
-    loadComponent: () => import('./pages/carrito/carrito.page').then( m => m.CarritoPage)
-  },
+
 ];

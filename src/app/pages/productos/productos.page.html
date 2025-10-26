@@ -1,15 +1,15 @@
 <app-menu></app-menu>
 
-<ion-content [fullscreen]="true" class="productos-content">
-  <ion-header [translucent]="true">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Productos Ecológicos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<app-header-interno 
+  [nombreApp]="'GreenRoots'"
+  [ubicacion]="'Bogotá, Colombia'"
+  [mostrarPerfil]="true"
+  [mostrarCarrito]="true">
+</app-header-interno>
 
+<ion-content [fullscreen]="true" class="productos-content">
+  <!-- ELIMINAR el app-header-interno que estaba aquí -->
+  
   <div class="content-container">
     <!-- Barra de Búsqueda -->
     <ion-toolbar class="search-toolbar">
@@ -84,9 +84,9 @@
 
           <!-- Acciones de administración -->
           <div class="admin-actions" *ngIf="producto.stock > 0">
-            <ion-button expand="block" color="primary" size="small" (click)="reducirStock(producto.id, 1)">
+            <ion-button expand="block" color="primary" size="small" (click)="agregarAlCarrito(producto)">
               <ion-icon slot="start" name="cart-outline"></ion-icon>
-              Comprar
+              Agregar al Carrito
             </ion-button>
           </div>
 
@@ -130,4 +130,4 @@
       <p>Pronto tendremos nuevos productos ecológicos para ti.</p>
     </div>
   </div>
-</ion-content>  
+</ion-content>

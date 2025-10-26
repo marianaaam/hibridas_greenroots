@@ -84,6 +84,49 @@
   .seccion-derecha {
     display: flex;                                // ← Layout flexbox
     align-items: center;                          // ← Centrar verticalmente
+    gap: 12px;                                    // ← Espacio entre elementos
+
+    // NUEVO: Botón del carrito - FUERA de .boton-perfil
+    .boton-carrito {
+      --color: var(--white-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 50%;
+      position: relative;
+      
+      // Efecto hover
+      &:hover {
+        --background: rgba(255, 255, 255, 0.1);
+      }
+      
+      .carrito-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .icono-carrito {
+          font-size: 24px;
+        }
+        
+        .carrito-badge {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          font-size: 10px;
+          min-width: 18px;
+          height: 18px;
+          border-radius: 9px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid var(--primary-color);
+          font-weight: bold;
+        }
+      }
+    }
     
     // Botón de perfil
     .boton-perfil {
@@ -185,6 +228,24 @@
     }
     
     .seccion-derecha {
+      gap: 8px;                                   // ← Menos espacio en móvil
+      
+      .boton-carrito {
+        padding: 6px;
+        
+        .carrito-container {
+          .icono-carrito {
+            font-size: 22px;
+          }
+          
+          .carrito-badge {
+            min-width: 16px;
+            height: 16px;
+            font-size: 9px;
+          }
+        }
+      }
+      
       .boton-perfil {
         padding: 6px 8px;                        // ← Menos padding
         gap: 8px;                               // ← Menos espacio
@@ -230,12 +291,14 @@
 
 // Animaciones suaves para interacciones
 .boton-hamburguesa,
-.boton-perfil {
+.boton-perfil,
+.boton-carrito {
   transition: all 0.3s ease;                     // ← Transición suave de 0.3 segundos
 }
 
-.avatar-usuario {
-  transition: transform 0.2s ease;               // ← Transición para el avatar
+.avatar-usuario,
+.carrito-container {
+  transition: transform 0.2s ease;               // ← Transición para el avatar y carrito
   
   &:hover {
     transform: scale(1.05);                     // ← Efecto de crecimiento al pasar mouse
