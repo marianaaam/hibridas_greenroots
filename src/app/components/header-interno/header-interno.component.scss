@@ -1,3 +1,12 @@
+// Forzar que el header ignore completamente el modo oscuro
+ion-header.header-interno {
+  color-scheme: light only !important;
+}
+
+.header-interno {
+  color-scheme: light only !important;
+  forced-color-adjust: none !important;
+}
 // Estilos para el header interno usando tus variables personalizadas
 .header-interno {
   // Toolbar personalizado con tus colores
@@ -79,6 +88,8 @@
       }
     }
   }
+
+
 
   // Sección derecha del header
   .seccion-derecha {
@@ -181,6 +192,22 @@
     }
   }
 }
+
+.ubicacion {
+  color: black !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .icono-ubicacion {
+    color: black !important;
+  }
+
+  span {
+    color: black !important;
+  }
+}
+
 
 // ============================================
 // RESPONSIVE DESIGN - MEDIA QUERIES

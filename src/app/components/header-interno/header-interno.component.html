@@ -27,7 +27,7 @@
 
     <div slot="end" class="seccion-derecha">
       
-      <!-- NUEVO: Botón del carrito -->
+      <!-- CORREGIDO: Usar cantidadCarrito en lugar de contadorCarrito -->
       <ion-button 
         *ngIf="mostrarCarrito"
         fill="clear" 
@@ -37,7 +37,7 @@
         <div class="carrito-container">
           <ion-icon name="cart-outline" class="icono-carrito"></ion-icon>
           <ion-badge *ngIf="cantidadCarrito > 0" color="danger" class="carrito-badge">
-            {{ cantidadCarrito }}
+            {{ cantidadCarrito }} <!-- CAMBIO: contadorCarrito → cantidadCarrito -->
           </ion-badge>
         </div>
         

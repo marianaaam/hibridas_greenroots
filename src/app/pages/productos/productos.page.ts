@@ -1,7 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { 
+  IonContent, 
+  IonCard, 
+  IonCardHeader, 
+  IonCardTitle, 
+  IonCardContent,
+  IonButton,
+  IonIcon,
+  IonBadge,
+  IonSpinner,
+  IonText,
+  IonToolbar,
+  IonSearchbar,
+  AlertController
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { 
+  cartOutline, 
+  trashOutline, 
+  removeCircleOutline, 
+  addCircleOutline,
+  alertCircleOutline,
+  searchOutline,
+  leafOutline,
+  refreshOutline
+} from 'ionicons/icons';
+
 import { MenuComponent } from '../../components/menu/menu.component';
 import { HeaderInternoComponent } from '../../components/header-interno/header-interno.component';
 import { ProductosService, Producto } from '../../services/productos';
@@ -15,7 +41,20 @@ import { CarritoService } from '../../services/carrito';
   imports: [
     CommonModule, 
     FormsModule,
-    IonicModule, 
+    // Componentes de Ionic individuales
+    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonButton,
+    IonIcon,
+    IonBadge,
+    IonSpinner,
+    IonText,
+    IonToolbar,
+    IonSearchbar,
+    // Tus componentes personalizados
     MenuComponent,
     HeaderInternoComponent
   ]
@@ -30,8 +69,21 @@ export class ProductosPage implements OnInit {
 
   constructor(
     private productosService: ProductosService,
-    private carritoService: CarritoService
-  ) {}
+    private carritoService: CarritoService,
+    private alertController: AlertController
+  ) {
+    // Registrar los íconos que vas a usar
+    addIcons({
+      'cart-outline': cartOutline,
+      'trash-outline': trashOutline,
+      'remove-circle-outline': removeCircleOutline,
+      'add-circle-outline': addCircleOutline,
+      'alert-circle-outline': alertCircleOutline,
+      'search-outline': searchOutline,
+      'leaf-outline': leafOutline,
+      'refresh-outline': refreshOutline
+    });
+  }
 
   async ngOnInit() {
     await this.cargarProductos();
@@ -81,7 +133,6 @@ export class ProductosPage implements OnInit {
     }
   }
 
-  // NUEVO MÉTODO: Agregar al carrito
   async agregarAlCarrito(producto: Producto) {
     try {
       console.log('Agregando al carrito:', producto.nombre);
@@ -94,21 +145,41 @@ export class ProductosPage implements OnInit {
         if (stockReducido) {
           await this.cargarProductos();
           this.filtrarProductos(this.categoriaSeleccionada);
-          alert(`¡${producto.nombre} agregado al carrito!`);
+          // Usar alert de Ionic en lugar de alert nativo
+          const alert = await this.alertController.create({
+            header: '¡Éxito!',
+            message: `¡${producto.nombre} agregado al carrito!`,
+            buttons: ['OK']
+          });
+          await alert.present();
         } else {
           await this.carritoService.eliminarProducto(producto.id);
-          alert('Error: No se pudo actualizar el stock');
+          const alert = await this.alertController.create({
+            header: 'Error',
+            message: 'No se pudo actualizar el stock',
+            buttons: ['OK']
+          });
+          await alert.present();
         }
       } else {
-        alert('No hay suficiente stock disponible');
+        const alert = await this.alertController.create({
+          header: 'Stock Insuficiente',
+          message: 'No hay suficiente stock disponible',
+          buttons: ['OK']
+        });
+        await alert.present();
       }
     } catch (error) {
       console.error('Error al agregar al carrito:', error);
-      alert('Error al agregar al carrito');
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'Error al agregar al carrito',
+        buttons: ['OK']
+      });
+      await alert.present();
     }
   }
 
-  // Métodos existentes para administración
   async reducirStock(id: number, cantidad: number) {
     try {
       const resultado = await this.productosService.reducirStock(id, cantidad);
@@ -148,9 +219,25 @@ export class ProductosPage implements OnInit {
   }
 
   async confirmarEliminacion(producto: Producto) {
-    if (confirm(`¿Estás seguro de que quieres eliminar "${producto.nombre}"?`)) {
-      await this.eliminarProducto(producto.id);
-    }
+    const alert = await this.alertController.create({
+      header: 'Confirmar Eliminación',
+      message: `¿Estás seguro de que quieres eliminar "${producto.nombre}"?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: () => {
+            this.eliminarProducto(producto.id);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   limpiarBusqueda() {

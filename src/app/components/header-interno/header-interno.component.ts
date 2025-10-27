@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule, MenuController } from '@ionic/angular';
 import { CarritoService } from '../../services/carrito';
+import { Subscription } from 'rxjs'; // Añade esta importación
 
 @Component({
   selector: 'app-header-interno',
@@ -11,7 +12,7 @@ import { CarritoService } from '../../services/carrito';
   standalone: true,
   imports: [CommonModule, IonicModule]
 })
-export class HeaderInternoComponent implements OnInit {
+export class HeaderInternoComponent implements OnInit, OnDestroy { // Añade OnDestroy
   
   @Input() nombreApp: string = 'GreenRoots';
   @Input() ubicacion: string = 'Bogotá, Colombia';
@@ -20,6 +21,8 @@ export class HeaderInternoComponent implements OnInit {
   
   usuarioActual: any = null;
   cantidadCarrito: number = 0;
+  
+  private carritoSubscription!: Subscription; // Añade esta propiedad
 
   constructor(
     private menuController: MenuController,
@@ -31,6 +34,21 @@ export class HeaderInternoComponent implements OnInit {
 
   async ngOnInit() {
     await this.actualizarCantidadCarrito();
+    
+    // NUEVO: Suscribirse a los cambios del carrito
+    this.carritoSubscription = this.carritoService.contadorCarrito$.subscribe(
+      (cantidad: number) => {
+        this.cantidadCarrito = cantidad;
+        console.log('Carrito actualizado en header:', cantidad);
+      }
+    );
+  }
+
+  // NUEVO: Limpiar suscripción
+  ngOnDestroy() {
+    if (this.carritoSubscription) {
+      this.carritoSubscription.unsubscribe();
+    }
   }
 
   private cargarUsuarioActual(): void {
@@ -73,16 +91,16 @@ export class HeaderInternoComponent implements OnInit {
   }
 
   getNombreCompleto(): string {
-  if (this.usuarioActual) {
-    // El usuario tiene "nombre" en lugar de "nombres" y "apellidos"
-    if (this.usuarioActual.nombre) {
-      return this.usuarioActual.nombre;
-    } else if (this.usuarioActual.nombres && this.usuarioActual.apellidos) {
-      return `${this.usuarioActual.nombres} ${this.usuarioActual.apellidos}`;
+    if (this.usuarioActual) {
+      // El usuario tiene "nombre" en lugar de "nombres" y "apellidos"
+      if (this.usuarioActual.nombre) {
+        return this.usuarioActual.nombre;
+      } else if (this.usuarioActual.nombres && this.usuarioActual.apellidos) {
+        return `${this.usuarioActual.nombres} ${this.usuarioActual.apellidos}`;
+      }
     }
+    return 'Usuario GreenRoots';
   }
-  return 'Usuario GreenRoots';
-}
 
   getIniciales(): string {
     if (this.usuarioActual && this.usuarioActual.nombre) {

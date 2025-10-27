@@ -1,13 +1,114 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>carrito</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi Carrito</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="vaciarCarrito()" [disabled]="carritoVacio">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">carrito</ion-title>
+      <ion-title size="large">Mi Carrito</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner></ion-spinner>
+    <p>Cargando carrito...</p>
+  </div>
+
+  <!-- Carrito Vacío -->
+  <div *ngIf="!isLoading && carritoVacio" class="empty-cart">
+    <ion-icon name="cart-outline" class="empty-icon"></ion-icon>
+    <h2>Tu carrito está vacío</h2>
+    <p>Agrega algunos productos para comenzar</p>
+    <ion-button routerLink="/" routerDirection="root" fill="solid">
+      <ion-icon slot="start" name="storefront-outline"></ion-icon>
+      Ir a Comprar
+    </ion-button>
+  </div>
+
+  <!-- Lista de Productos -->
+  <ion-list *ngIf="!isLoading && !carritoVacio">
+    <ion-item-sliding *ngFor="let item of carritoItems">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img [src]="item.producto.imagen || 'assets/images/placeholder.jpg'" 
+               [alt]="item.producto.nombre" />
+        </ion-thumbnail>
+        
+        <ion-label>
+          <h2>{{ item.producto.nombre }}</h2>
+          <p>{{ formatPrecio(item.producto.precio) }} c/u</p>
+          <p *ngIf="item.producto.stock" class="stock">
+            Stock: {{ item.producto.stock }}
+          </p>
+        </ion-label>
+
+        <!-- Contador de Cantidad -->
+        <div slot="end" class="quantity-controls">
+          <ion-button 
+            size="small" 
+            fill="clear"
+            (click)="disminuirCantidad(item)"
+            [disabled]="item.cantidad <= 1">
+            <ion-icon name="remove-outline"></ion-icon>
+          </ion-button>
+          
+          <ion-text class="quantity">
+            {{ item.cantidad }}
+          </ion-text>
+          
+          <ion-button 
+            size="small" 
+            fill="clear"
+            (click)="aumentarCantidad(item)"
+            [disabled]="item.cantidad >= item.producto.stock">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="eliminarProducto(item)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!-- Resumen y Total -->
+  <ion-footer *ngIf="!isLoading && !carritoVacio">
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row class="ion-justify-content-between ion-align-items-center">
+          <ion-col size="8">
+            <ion-text color="dark">
+              <h3>Total: {{ formatPrecio(total) }}</h3>
+            </ion-text>
+            <ion-note>
+              {{ carritoItems.length }} producto(s) en el carrito
+            </ion-note>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button 
+              expand="block" 
+              color="primary"
+              routerLink="/checkout"
+              [disabled]="carritoVacio">
+              Comprar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
 </ion-content>

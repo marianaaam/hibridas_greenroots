@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs'; // Añade esta importación
 import { Producto } from './productos';
 import { StorageService } from './storage';
 
@@ -13,12 +14,16 @@ export interface ItemCarrito {
 export class CarritoService {
   private STORAGE_KEY = 'carrito';
   private items: ItemCarrito[] = [];
+  
+  // NUEVO: BehaviorSubject para el contador
+  private contadorCarritoSubject = new BehaviorSubject<number>(0);
+  public contadorCarrito$ = this.contadorCarritoSubject.asObservable();
 
   constructor(private storageService: StorageService) {
-    this.cargarCarrito();
+    this.inicializarCarrito();
   }
 
-  private async cargarCarrito() {
+  private async inicializarCarrito() {
     try {
       const carritoGuardado = await this.storageService.get(this.STORAGE_KEY);
       if (carritoGuardado && Array.isArray(carritoGuardado)) {
@@ -28,9 +33,12 @@ export class CarritoService {
         this.items = [];
         console.log('Carrito vacío iniciado');
       }
+      // NUEVO: Actualizar el contador inicial
+      this.actualizarContador();
     } catch (error) {
       console.error('Error al cargar carrito:', error);
       this.items = [];
+      this.actualizarContador();
     }
   }
 
@@ -38,14 +46,37 @@ export class CarritoService {
     try {
       await this.storageService.set(this.STORAGE_KEY, this.items);
       console.log('Carrito guardado');
+      // NUEVO: Actualizar contador después de guardar
+      this.actualizarContador();
     } catch (error) {
       console.error('Error al guardar carrito:', error);
     }
   }
 
+  // NUEVO: Método para actualizar el contador
+  private actualizarContador() {
+    const totalItems = this.items.reduce((total, item) => total + item.cantidad, 0);
+    this.contadorCarritoSubject.next(totalItems);
+    console.log('Contador actualizado:', totalItems);
+  }
+
   async obtenerCarrito(): Promise<ItemCarrito[]> {
     await this.cargarCarrito();
     return [...this.items];
+  }
+
+  private async cargarCarrito() {
+    try {
+      const carritoGuardado = await this.storageService.get(this.STORAGE_KEY);
+      if (carritoGuardado && Array.isArray(carritoGuardado)) {
+        this.items = carritoGuardado;
+      } else {
+        this.items = [];
+      }
+    } catch (error) {
+      console.error('Error al cargar carrito:', error);
+      this.items = [];
+    }
   }
 
   async agregarProducto(producto: Producto, cantidad: number = 1): Promise<boolean> {
@@ -75,7 +106,7 @@ export class CarritoService {
         });
       }
       
-      await this.guardarCarrito();
+      await this.guardarCarrito(); // Esto ya actualiza el contador
       console.log('Producto agregado al carrito:', producto.nombre);
       return true;
     } catch (error) {
@@ -92,7 +123,7 @@ export class CarritoService {
       
       if (index !== -1) {
         this.items.splice(index, 1);
-        await this.guardarCarrito();
+        await this.guardarCarrito(); // Actualiza el contador
         console.log('Producto eliminado del carrito');
         return true;
       }
@@ -121,7 +152,7 @@ export class CarritoService {
         }
         
         item.cantidad = nuevaCantidad;
-        await this.guardarCarrito();
+        await this.guardarCarrito(); // Actualiza el contador
         return true;
       }
       
@@ -135,7 +166,7 @@ export class CarritoService {
   async vaciarCarrito(): Promise<boolean> {
     try {
       this.items = [];
-      await this.guardarCarrito();
+      await this.guardarCarrito(); // Actualiza el contador
       console.log('Carrito vaciado');
       return true;
     } catch (error) {
