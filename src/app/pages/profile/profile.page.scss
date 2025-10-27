@@ -1,18 +1,25 @@
 .profile-content {
-  --background: #f2f2f2;
+  --background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
 .profile-container {
+  padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px;
+  min-height: 100%;
+}
+
+.profile-photo-section {
+  text-align: center;
+  margin-bottom: 32px;
+  width: 100%;
 }
 
 .profile-photo-container {
   position: relative;
-  margin-top: 16px;
-  margin-bottom: 24px;
+  display: inline-block;
+  margin-bottom: 16px;
 }
 
 .profile-photo {
@@ -20,35 +27,215 @@
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #008f39;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 4px solid var(--ion-color-primary);
+  box-shadow: 0 8px 25px rgba(0, 143, 57, 0.3);
+  background: #ffffff;
 }
 
-.camera-icon {
+.camera-icon-container {
   position: absolute;
   bottom: 5px;
   right: 5px;
-  font-size: 24px;
-  color: white;
-  background-color: #008f39;
+  width: 36px;
+  height: 36px;
+  background: var(--ion-color-primary);
   border-radius: 50%;
-  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: var(--ion-color-primary-shade);
+    transform: scale(1.1);
+  }
 }
 
-ion-item {
-  border: 1px solid #008f39;
-  border-radius: 6px;
-  margin: 6px 0;
+.camera-icon {
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.verified-chip {
+  margin-top: 8px;
+  --background: rgba(var(--ion-color-success-rgb), 0.1);
+  --color: var(--ion-color-success);
+}
+
+.profile-list {
+  background: transparent;
+  width: 100%;
+  max-width: 500px;
+}
+
+.profile-item {
   --background: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 70px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.icon-container {
+  width: 40px;
+  height: 40px;
+  background: rgba(var(--ion-color-primary-rgb), 0.1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.item-icon {
+  font-size: 20px;
+  color: var(--ion-color-primary);
+}
+
+.item-label {
+  display: flex;
+  flex-direction: column;
+  margin: 8px 0;
+}
+
+.label-text {
+  font-size: 12px;
+  color: #6c757d;
+  margin-bottom: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value-text {
+  font-size: 16px;
+  color: #2c3e50;
+  font-weight: 600;
 }
 
 .edit-button {
-  margin-top: 20px;
-  background-color: #008f39;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 8px 0;
-  box-shadow: 0 4px 6px rgba(0, 143, 57, 0.3);
+  --background: #038637; 
+  --background-activated: #0cb854;
+  --background-hover: #0ec965; 
+  --border-radius: 12px;
+  --box-shadow: 0 6px 20px rgba(16, 220, 96, 0.4);
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  margin: 24px 0;
+  font-weight: 600;
+  font-size: 16px;
+  max-width: 500px;
+  width: 100%;
+  transition: all 0.3s ease;
+
+  &:hover {
+    --box-shadow: 0 8px 25px rgba(16, 220, 96, 0.5);
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+// Animaciones
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-item {
+  animation: fadeInUp 0.5s ease-out;
+  
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 12px;
+  }
+  
+  .profile-photo {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .profile-name {
+    font-size: 20px;
+  }
+  
+  .profile-item {
+    --min-height: 60px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+  }
+  
+  .item-label {
+    margin: 6px 0;
+  }
+  
+  .label-text {
+    font-size: 11px;
+  }
+  
+  .value-text {
+    font-size: 14px;
+  }
+}
+
+// Estados de interacción
+.profile-item:focus-within {
+  border-color: var(--ion-color-primary);
+  box-shadow: 0 0 0 2px rgba(var(--ion-color-primary-rgb), 0.2);
+}
+
+// Efecto de carga
+.skeleton-loading {
+  .profile-photo {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
